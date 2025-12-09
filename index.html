@@ -25,7 +25,8 @@
             border-bottom: 2px solid #fde047; /* yellow-300 */
             cursor: pointer;
             transition: all 0.2s;
-            padding: 0 2px;
+            padding: 0 4px;
+            margin: 0 1px;
             border-radius: 4px;
             font-weight: 600;
             color: #854d0e;
@@ -33,25 +34,7 @@
         .highlight-word:hover {
             background-color: #facc15;
             color: #000;
-        }
-
-        /* Chunking Styles */
-        .chunk-divider {
-            color: #cbd5e1;
-            margin: 0 4px;
-            font-weight: 300;
-        }
-        
-        .grammar-note {
-            display: inline-block;
-            font-size: 0.75rem;
-            background-color: #e0f2fe;
-            color: #0369a1;
-            padding: 0 4px;
-            border-radius: 4px;
-            margin-right: 4px;
-            vertical-align: middle;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         /* Hide scrollbar for tab navigation */
@@ -131,7 +114,7 @@
     <script>
         // --- DATA ---
         
-        // Vocabulary Dictionary (For lookup)
+        // Vocabulary Dictionary
         const vocabDict = {
             "celebration": { part: "n.", def: "慶祝；頌揚", example: "The party was a celebration of their victory.", trans: "這場派對是為了慶祝他們的勝利。" },
             "athletic": { part: "adj.", def: "運動的；體育的", example: "She showed great athletic ability on the field.", trans: "她在場上展現了極佳的運動能力。" },
@@ -152,133 +135,114 @@
             {
                 id: 1,
                 english: "From ancient religious festival to modern celebration of sporting achievement, the Olympics have changed considerably over time.",
-                chunked: "From ancient religious festival / to modern <span class='highlight-word'>celebration</span> of sporting achievement, / the Olympics have changed considerably / over time.",
                 chinese: "從古代宗教節慶到現代對於體育成就的頌揚，奧林匹克運動會隨著時間發生了很大的變化。",
                 keywords: ["celebration"]
             },
             {
                 id: 2,
                 english: "Today, they feature both athletic excellence and peaceful cooperation among nations.",
-                chunked: "Today, / they feature both <span class='highlight-word'>athletic</span> excellence / and peaceful <span class='highlight-word'>cooperation</span> among nations.",
                 chinese: "如今，奧運不僅展現運動員的卓越表現，也促進各國之間的和平合作。",
                 keywords: ["athletic", "cooperation"]
             },
             {
                 id: 3,
                 english: "The first Olympics took place in 776 BC in the Greek city of Olympia, where they were subsequently held every four years.",
-                chunked: "The first Olympics took place in 776 BC / in the Greek city of Olympia, / <span class='grammar-note'>where</span> they were <span class='highlight-word'>subsequently</span> held / every four years.",
                 chinese: "首次奧林匹克運動會於西元前七七六年在希臘城市奧林匹亞舉行，此後每四年舉辦一次。",
                 keywords: ["subsequently"]
             },
             {
                 id: 4,
                 english: "Originally created to honor the god Zeus, the games held deep religious meaning.",
-                chunked: "Originally created to honor the god Zeus, / the games held / deep religious meaning.",
                 chinese: "奧運最初是為了敬奉宙斯神而設立，具有深厚的宗教意義。",
                 keywords: []
             },
             {
                 id: 5,
                 english: "Athletic competition was paired with sacrifices and singing, and people believed Zeus decided the victors.",
-                chunked: "<span class='highlight-word'>Athletic</span> competition was paired with <span class='highlight-word'>sacrifices</span> and singing, / <span class='grammar-note'>and</span> people believed / Zeus decided the victors.",
                 chinese: "體育競賽與祭祀和歌唱活動相結合，且人們相信勝利者由宙斯決定。",
                 keywords: ["sacrifices"]
             },
             {
                 id: 6,
                 english: "The stadion, a roughly 180-meter sprint, was the only event for the first 13 Olympics.",
-                chunked: "The stadion, / a roughly 180-meter sprint, / was the only event / for the first 13 Olympics.",
                 chinese: "在最初的十三屆奧運會中，體育場短跑（約一百八十公尺）是唯一的比賽項目。",
                 keywords: []
             },
             {
                 id: 7,
                 english: "Gradually, new contests were introduced, including wrestling, boxing, pankration (a combat sport), and chariot racing.",
-                chunked: "Gradually, / new contests were introduced, / including wrestling, boxing, pankration (a <span class='highlight-word'>combat</span> sport), / and chariot racing.",
                 chinese: "漸漸地，新的競賽陸續引進，包括摔角、拳擊、潘克拉辛（一種格鬥運動）以及戰車競賽。",
                 keywords: ["combat"]
             },
             {
                 id: 8,
                 english: "Winners were crowned with olive wreaths and were often paid handsomely by their home cities.",
-                chunked: "Winners were crowned with olive wreaths / <span class='grammar-note'>and</span> were often paid handsomely / by their home cities.",
                 chinese: "勝利者會戴上橄欖枝花冠，並常獲家鄉城市重賞。",
                 keywords: []
             },
             {
                 id: 9,
                 english: "Only freeborn Greek men could participate, and it’s thought that they competed naked.",
-                chunked: "Only freeborn Greek men could participate, / <span class='grammar-note'>and</span> it’s thought / <span class='grammar-note'>that</span> they competed naked.",
                 chinese: "當時只有自由出身的希臘男性可參賽，且據說他們是裸體參加比賽。",
                 keywords: []
             },
             {
                 id: 10,
                 english: "Women may have been excluded from even watching the Olympics.",
-                chunked: "Women may have been <span class='highlight-word'>excluded</span> / from even watching the Olympics.",
                 chinese: "女性甚至可能被禁止觀看奧運賽事。",
                 keywords: ["excluded"]
             },
             {
                 id: 11,
                 english: "However, they had a separate festival, the Heraean Games, honoring the goddess Hera.",
-                chunked: "However, / they had a separate festival, / the Heraean Games, / honoring the goddess Hera.",
                 chinese: "然而，女性則有自己的節慶——赫拉運動會，用以敬奉女神赫拉。",
                 keywords: []
             },
             {
                 id: 12,
                 english: "The games were protected by the Ekecheiria, or “Olympic truce.”",
-                chunked: "The games were protected / by the Ekecheiria, / or “Olympic truce.”",
                 chinese: "當時的奧運受到奧林匹克休戰協議（Ekecheiria）的保護。",
                 keywords: []
             },
             {
                 id: 13,
                 english: "Though not always observed, it called for a temporary peace to allow competitors and spectators from different regions to come together and enjoy the games.",
-                chunked: "Though not always observed, / it called for a temporary peace / to allow competitors and spectators from different regions / to come together / and enjoy the games.",
                 chinese: "雖然這項協議並非總是遵守，但它呼籲暫時停戰，讓來自不同地區的參賽者與觀眾能齊聚一堂、享受奧運盛事。",
                 keywords: []
             },
             {
                 id: 14,
                 english: "In 1896, the Frenchman Pierre de Coubertin set the stage for the modern Olympic Games by organizing the first Summer Olympics in Athens.",
-                chunked: "In 1896, / the Frenchman Pierre de Coubertin / set the stage for the modern Olympic Games / by organizing the first Summer Olympics / in Athens.",
                 chinese: "一八九六年，法國人皮耶．德．古柏坦在雅典籌辦了首屆夏季奧運會，為現代奧運奠定了基礎。",
                 keywords: []
             },
             {
                 id: 15,
                 english: "Currently, there are 43 sports on the Olympic program.",
-                chunked: "Currently, / there are 43 sports / on the Olympic program.",
                 chinese: "目前，奧運會共有四十三種運動。",
                 keywords: []
             },
             {
                 id: 16,
                 english: "Winners in each event are given medals (gold, silver, or bronze), and while there’s no official prize money, athletes may receive monetary rewards from their home countries or sponsors.",
-                chunked: "Winners in each event are given medals (gold, silver, or <span class='highlight-word'>bronze</span>), / <span class='grammar-note'>and while</span> there’s no official prize money, / athletes may receive <span class='highlight-word'>monetary</span> rewards / from their home countries or sponsors.",
                 chinese: "每個項目的勝者會獲得獎牌（金牌、銀牌或銅牌），雖然沒有官方獎金，但運動員可能會從自己國家或贊助商那裡獲得獎勵。",
                 keywords: ["bronze", "monetary"]
             },
             {
                 id: 17,
                 english: "Coubertin’s vision for the Olympics went beyond athleticism.",
-                chunked: "Coubertin’s vision for the Olympics / went beyond <span class='highlight-word'>athleticism</span>.",
                 chinese: "古柏坦對奧運的願景超越了運動競技本身。",
                 keywords: []
             },
             {
                 id: 18,
                 english: "He believed sport should promote strong moral character.",
-                chunked: "He believed / <span class='grammar-note'>(that)</span> sport should promote / strong moral character.",
                 chinese: "他認為體育應培養健全的道德品格。",
                 keywords: []
             },
             {
                 id: 19,
                 english: "Early guiding principles—“encouraging effort,” “preserving human dignity,” and “developing harmony”—remain central today.",
-                chunked: "Early guiding principles / —“encouraging effort,” “<span class='highlight-word'>preserving</span> human <span class='highlight-word'>dignity</span>,” and “developing <span class='highlight-word'>harmony</span>”— / remain central today.",
                 chinese: "早期的指導原則──「鼓勵努力」、「維護人的尊嚴」以及「培養和諧」──至今仍是核心價值。",
                 keywords: ["preserving", "dignity", "harmony"]
             }
@@ -322,7 +286,6 @@
         // --- STATE & UTILS ---
         let currentTab = 'read';
         let showChinese = true;
-        let showStructure = false; // New Syntax Mode state
         let quizAnswers = {};
         let quizSubmitted = false;
         const synth = window.speechSynthesis;
@@ -340,8 +303,6 @@
             const sortedKeywords = [...keywords].sort((a, b) => b.length - a.length);
             const regex = new RegExp(`\\b(${sortedKeywords.join('|')})\\w*\\b`, 'gi');
             return text.replace(regex, (match) => {
-                // Remove any trailing punctuation for the lookup key if necessary, 
-                // but keep it for display. For simplicity here we assume match is clean enough.
                 const lookupKey = match.toLowerCase(); 
                 return `<span class="highlight-word" onclick="openDict('${lookupKey}', event)">${match}</span>`;
             });
@@ -351,11 +312,8 @@
         function openDict(word, event) {
             if (event) event.stopPropagation();
             
-            // Normalize word (remove endings like 's', 'ing' if simple match fails)
-            // A simple lookup fallback
             let data = vocabDict[word.toLowerCase()];
             if (!data) {
-                // Try finding base word from keys
                 const base = Object.keys(vocabDict).find(k => word.toLowerCase().includes(k));
                 if (base) data = vocabDict[base];
             }
@@ -369,7 +327,6 @@
                 const panel = document.getElementById('dict-panel');
                 panel.classList.remove('translate-y-full');
                 
-                // Speak immediately on click
                 speak(word);
             }
         }
@@ -414,15 +371,6 @@
                                 </div>
                                 <span class="text-sm font-medium text-slate-700">中譯 Translation</span>
                             </label>
-
-                            <!-- Toggle Structure -->
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <div class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${showStructure ? 'bg-indigo-500' : 'bg-slate-300'}">
-                                    <input type="checkbox" class="sr-only" onchange="toggleStructure()" ${showStructure ? 'checked' : ''}>
-                                    <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${showStructure ? 'translate-x-6' : 'translate-x-1'}"></span>
-                                </div>
-                                <span class="text-sm font-medium text-slate-700">句構 Analysis</span>
-                            </label>
                         </div>
                     </div>
 
@@ -431,20 +379,7 @@
             `;
 
             sentences.forEach(sent => {
-                // If structure mode is ON, use chunked text. If OFF, use plain English but with highlights.
-                // Note: The chunked text in data already has highlights embedded manually, 
-                // but standard text needs dynamic highlighting.
-                
-                let displayHtml = "";
-                
-                if (showStructure) {
-                    // Structure mode: Use pre-chunked HTML. 
-                    // Replacing / with visual dividers.
-                    displayHtml = sent.chunked.replace(/\//g, '<span class="chunk-divider">|</span>');
-                } else {
-                    // Normal mode: Plain english with highlights
-                    displayHtml = highlightKeywords(sent.english, sent.keywords);
-                }
+                let displayHtml = highlightKeywords(sent.english, sent.keywords);
 
                 html += `
                     <div id="sent-${sent.id}" class="bg-white rounded-lg shadow-sm border border-slate-100 p-4 hover:shadow-md transition-shadow">
@@ -473,36 +408,33 @@
             const container = document.getElementById('app-content');
             const wordsArray = Object.keys(vocabDict).map(k => ({ word: k, ...vocabDict[k] }));
             
-            let html = `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 animate-fade-in">`;
+            // Increased height from h-80 to h-96 for more space
+            let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">`;
 
             wordsArray.forEach((item, index) => {
                 html += `
-                <div class="h-80 perspective-1000 cursor-pointer group" onclick="this.querySelector('.card-inner').classList.toggle('rotate-y-180')">
+                <div class="h-96 perspective-1000 cursor-pointer group" onclick="this.querySelector('.card-inner').classList.toggle('rotate-y-180')">
                     <div class="card-inner relative w-full h-full duration-500 transform-style-3d transition-transform">
                         <!-- Front -->
                         <div class="absolute w-full h-full bg-white rounded-2xl shadow-md border-2 border-slate-100 flex flex-col items-center justify-center p-6 backface-hidden group-hover:border-blue-200 transition-colors">
                             <span class="text-xs text-blue-500 font-bold tracking-wider mb-2 uppercase">Tap to flip</span>
-                            <h3 class="text-3xl font-bold text-slate-800 mb-2">${item.word}</h3>
-                            <span class="inline-block bg-slate-100 text-slate-500 text-sm px-3 py-1 rounded-full mb-6 font-mono">${item.part}</span>
-                            <button onclick="event.stopPropagation(); speak('${item.word}')" class="p-3 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors shadow-sm hover:shadow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                            <h3 class="text-4xl font-bold text-slate-800 mb-2">${item.word}</h3>
+                            <span class="inline-block bg-slate-100 text-slate-500 text-sm px-4 py-1.5 rounded-full mb-8 font-mono">${item.part}</span>
+                            <button onclick="event.stopPropagation(); speak('${item.word}')" class="p-4 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors shadow-sm hover:shadow transform hover:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             </button>
                         </div>
                         
                         <!-- Back -->
-                        <div class="absolute w-full h-full bg-blue-600 rounded-2xl shadow-md text-white flex flex-col items-start p-6 rotate-y-180 backface-hidden overflow-y-auto">
-                            <div class="w-full border-b border-blue-400 pb-2 mb-4 flex justify-between items-baseline">
-                                <span class="font-mono bg-blue-700 px-2 py-1 rounded text-xs">${item.part}</span>
-                                <h3 class="text-xl font-bold">${item.def}</h3>
+                        <div class="absolute w-full h-full bg-blue-600 rounded-2xl shadow-md text-white flex flex-col items-start p-8 rotate-y-180 backface-hidden overflow-y-auto">
+                            <div class="w-full border-b border-blue-400 pb-4 mb-6 flex justify-between items-baseline">
+                                <h3 class="text-3xl font-bold tracking-wide">${item.def}</h3>
+                                <span class="font-mono bg-blue-700/50 px-2 py-1 rounded text-sm text-blue-100">${item.part}</span>
                             </div>
-                            <div class="text-left w-full space-y-3">
+                            <div class="text-left w-full space-y-6">
                                 <div>
-                                    <p class="text-blue-100 text-xs uppercase font-bold tracking-wider mb-1">Example</p>
-                                    <p class="text-white italic leading-snug">"${item.example}"</p>
-                                </div>
-                                <div>
-                                    <p class="text-blue-100 text-xs uppercase font-bold tracking-wider mb-1">Translation</p>
-                                    <p class="text-blue-50 text-sm">${item.trans}</p>
+                                    <p class="text-white text-xl font-serif italic leading-relaxed mb-2">"${item.example}"</p>
+                                    <p class="text-blue-200 text-lg font-medium">${item.trans}</p>
                                 </div>
                             </div>
                         </div>
@@ -638,11 +570,6 @@
 
         window.toggleChinese = function() {
             showChinese = !showChinese;
-            renderReader();
-        };
-
-        window.toggleStructure = function() {
-            showStructure = !showStructure;
             renderReader();
         };
 
